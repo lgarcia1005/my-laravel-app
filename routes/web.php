@@ -21,19 +21,22 @@ use Illuminate\Support\Facades\Route;
 //Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('home');
     Route::get('posts/{post:slug}', 'show');
 });
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return View::make('posts', [
-        'posts' => $category->posts
+        'posts' => $category->posts,
+        'currentCategory' => $category,
+        'categories' => Category::all()
     ]);
 });
 
 Route::get('authors/{author:username}', function (User $author) {
     return View::make('posts', [
-        'posts' => $author->posts
+        'posts' => $author->posts,
+        'categories' => Category::all()
     ]);
 });
 
