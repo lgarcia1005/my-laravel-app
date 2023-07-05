@@ -26,20 +26,19 @@ Route::controller(PostController::class)->group(function () {
     Route::get('posts/{post:slug}', 'show');
 });
 
-Route::get('categories/{category:slug}', function (Category $category) {
-    return View::make('posts', [
-        'posts' => $category->posts,
-        'currentCategory' => $category,
-        'categories' => Category::all()
-    ]);
-});
+//Route::get('categories/{category:slug}', function (Category $category) {
+//    return View::make('posts', [
+//        'posts' => $category->posts,
+//        'currentCategory' => $category,
+//        'categories' => Category::all()
+//    ]);
+//});
 
-Route::get('authors/{author:username}', function (User $author) {
-    return View::make('posts', [
-        'posts' => $author->posts,
-        'categories' => Category::all()
-    ]);
-});
+//Route::get('authors/{author:username}', function (User $author) {
+//    return View::make('posts.index', [
+//        'posts' => $author->posts,
+//    ]);
+//});
 
 Route::get('/user/{tor}', function (string $test) {
     return 'User ' . $test;
