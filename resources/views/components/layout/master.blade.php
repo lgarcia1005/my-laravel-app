@@ -8,6 +8,7 @@
 
 
 <body style="font-family: Open Sans, sans-serif">
+
 <section class="px-6 py-8">
     <nav class="md:flex md:justify-between md:items-center">
         <div>
@@ -16,14 +17,31 @@
             </a>
         </div>
 
-        <div class="mt-8 md:mt-0">
-            <a href="/" class="text-xs font-bold uppercase">Home Page</a>
+        <div class="mt-8 md:mt-0 flex items-center">
+            @guest()
+                <a href="/register" class="text-xs font-bold uppercase">Register</a>
+                <a href="/login" class="ml-6 text-xs font-bold uppercase">Login</a>
+            @endguest
+
+            @auth()
+                <span>Welcome <strong>{{ auth()->user()->name }}</strong></span>
+
+                <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" href="#" class="bg-gray-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                        Logout
+                    </button>
+                </form>
+            @endauth
 
             <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                 Subscribe for Updates
             </a>
         </div>
     </nav>
+
+    <x-flash :status="'success'"/>
+
 
     {{ $slot }}
 
@@ -52,6 +70,7 @@
                     </button>
                 </form>
             </div>
+
         </div>
     </footer>
 </section>

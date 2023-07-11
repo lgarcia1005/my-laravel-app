@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Models\Category;
-use App\Models\User;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\View;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,13 +16,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', [PostController::class, 'index']);
-//Route::get('posts/{post:slug}', [PostController::class, 'show']);
-
 Route::controller(PostController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('posts/{post:slug}', 'show');
 });
+
+Route::controller(RegisterController::class)->group(function () {
+    Route::middleware(['guest'])->group( function (){
+        Route::get('register', 'create');
+        Route::post('register', 'store');
+    });
+});
+
+Route::post('logout', [SessionsController::class, 'destroy']);
+
+Route::controller(SessionsController::class)->group(function () {
+    Route::post('logout', 'destroy')->middleware('auth');
+    Route::get('login', 'create')->middleware('guest');
+    Route::post('login', 'store');
+});
+
+
+//Route::get('/', [PostController::class, 'index']);
+//Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 //Route::get('categories/{category:slug}', function (Category $category) {
 //    return View::make('posts', [
