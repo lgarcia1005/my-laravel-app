@@ -40,7 +40,7 @@ class RegisterController extends Controller
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
             'email_verified_at' => Carbon::now(),
-            'remember_token' => Str::random(10)
+            'remember_token' => Str::random(10),
         ];
 
         $created_user = $user->create($submitData);

@@ -22,7 +22,7 @@ Route::controller(PostController::class)->group(function () {
 });
 
 Route::controller(RegisterController::class)->group(function () {
-    Route::middleware(['guest'])->group( function (){
+    Route::middleware(['guest'])->group(function () {
         Route::get('register', 'create');
         Route::post('register', 'store');
     });
@@ -35,7 +35,6 @@ Route::controller(SessionsController::class)->group(function () {
     Route::get('login', 'create')->middleware('guest');
     Route::post('login', 'store');
 });
-
 
 //Route::get('/', [PostController::class, 'index']);
 //Route::get('posts/{post:slug}', [PostController::class, 'show']);
@@ -55,17 +54,16 @@ Route::controller(SessionsController::class)->group(function () {
 //});
 
 Route::get('/user/{tor}', function (string $test) {
-    return 'User ' . $test;
+    return 'User '.$test;
 });
 
-Route::get('/posts/{post}/comments/{comment?}', function (string $postId, string $commentId = "bilat") {
+Route::get('/posts/{post}/comments/{comment?}', function (string $postId, string $commentId = 'bilat') {
     return "Post = {$postId} and Comment = {$commentId}";
 });
 
 Route::get('/user/{tor}/profile', function (string $test) {
     return route('profile', ['tor' => $test]);
 })->name('profile');
-
 
 Route::get('/ginger', function () {
     //    return redirect()->route('profile');
@@ -75,23 +73,22 @@ Route::get('/ginger', function () {
 
 Route::domain('google.com')->group(function () {
     Route::get('user/{id}', function (string $account, string $id) {
-        return "Hello Ginger";
+        return 'Hello Ginger';
     });
 });
 
 Route::prefix('payment')->group(function () {
-    Route::get('/', function (){
-        return "Hello From /payment index";
+    Route::get('/', function () {
+        return 'Hello From /payment index';
     });
 
-    Route::get('/user/{id}', function (string $id){
+    Route::get('/user/{id}', function (string $id) {
         return "Hello From /payment {$id}";
     });
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/users', function () {
-        return route('admin.users') . " From this routes";
+        return route('admin.users').' From this routes';
     })->name('users');
 });
-

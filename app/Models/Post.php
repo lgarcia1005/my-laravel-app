@@ -14,12 +14,12 @@ class Post extends Model
         'title',
         'slug',
         'excerpt',
-        'body'
+        'body',
     ];
 
     protected $with = [
         'category',
-        'author'
+        'author',
     ];
 
     public function scopeFilter($query, array $filters): void
@@ -48,6 +48,10 @@ class Post extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id');
     }
 }

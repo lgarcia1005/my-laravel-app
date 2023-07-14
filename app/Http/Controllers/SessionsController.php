@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -11,13 +10,6 @@ use Illuminate\Validation\ValidationException;
 
 class SessionsController extends Controller
 {
-    public function destroy()
-    {
-        Auth::logout();
-
-        return to_route('home')->with('success', 'User Logout');
-    }
-
     public function create()
     {
         return View::make('sessions.create');
@@ -42,11 +34,19 @@ class SessionsController extends Controller
 
         if (Auth::attempt($submitData)) {
             Session::regenerate();
-            return to_route('home')->with('success', 'Welcome Back ' . Auth::user()->name);
+
+            return to_route('home')->with('success', 'Welcome Back '.Auth::user()->name);
         }
 
         throw ValidationException::withMessages([
-            'username' => "No Found Credentials",
+            'username' => 'No Found Credentials',
         ]);
+    }
+
+    public function destroy()
+    {
+        Auth::logout();
+
+        return to_route('home')->with('success', 'User Logout');
     }
 }

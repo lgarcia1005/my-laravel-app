@@ -26,7 +26,7 @@ class CategoryDropdown extends Component
 
         return view('components.category-dropdown', [
             'categories' => $collection,
-            'currentCategory' => $collection->firstWhere('slug', request('category'))
+            'currentCategory' => $collection->firstWhere('slug', request('category')),
         ]);
     }
 }
