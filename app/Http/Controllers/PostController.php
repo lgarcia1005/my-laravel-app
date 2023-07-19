@@ -10,10 +10,10 @@ class PostController extends Controller
 {
     //
 
-    public function index(Request $request)
+    public function index(Post $post, Request $request)
     {
-        $posts = Post::latest()->filter(
-            $request->input(['search', 'category', 'author'])
+        $posts = $post->latest()->filter(
+            $request->only(['search', 'category', 'author'])
         )->paginate(6)->onEachSide(1)->withQueryString();
 
         return View::make('posts.index', [
@@ -23,7 +23,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $comments = $post->comments()->with(['author'])->latest()->simplePaginate(3);
+        $comments = $post->comments()->latest()->simplePaginate(5);
 
         return View::make('posts.show', [
             'post' => $post,

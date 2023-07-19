@@ -54,6 +54,12 @@
                 </div>
 
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                    @auth()
+                        @include('posts._add-comment-form')
+                    @else
+                        <a href="/register" class="hover:underline">Register Here</a><span> Or </span><a href="/login" class="hover:underline">Login Here</a> <span>To Comment</span>
+                    @endauth
+
                     @foreach($comments as $comment)
                         <x-post-comment :comment="$comment"/>
                     @endforeach
