@@ -30,7 +30,7 @@
             :aria-expanded="open"
             :aria-controls="$id('dropdown-button')"
             type="button"
-            class="flex items-center gap-2 py-2 pl-3 pr-9 text-left w-full lg:w-40"
+            class="flex items-center gap-2 py-2 pl-3 pr-9 text-left w-full lg:w-50"
         >
             {{ $trigger }}
         </button>
@@ -47,7 +47,7 @@
             class="absolute left-0 mt-2 lg:w-40 w-full rounded-md bg-white shadow-md z-50 overflow-auto max-h-52"
         >
 
-           {{ $slot }}
+            {{ $slot }}
 
 
         </div>

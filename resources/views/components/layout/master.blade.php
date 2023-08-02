@@ -30,14 +30,27 @@
             @endguest
 
             @auth()
-                <span>Welcome <strong>{{ auth()->user()->name }}</strong></span>
+                <x-dropdown>
+                    <x-slot name="trigger">
+                        <span>Welcome <strong>{{ auth()->user()->name }}</strong></span>
+                        <svg class="transform -rotate-90 absolute pointer-events-none" style="right: 12px;" width="22"
+                             height="22" viewBox="0 0 22 22">
+                            <g fill="none" fill-rule="evenodd">
+                                <path stroke="#000" stroke-opacity=".012" stroke-width=".5" d="M21 1v20.16H.84V1z">
+                                </path>
+                                <path fill="#222" d="M13.854 7.224l-3.847 3.856 3.847 3.856-1.184 1.184-5.04-5.04 5.04-5.04z"></path>
+                            </g>
+                        </svg>
+                    </x-slot>
 
-                <form action="/logout" method="post">
-                    @csrf
-                    <button type="submit" href="#" class="bg-gray-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-                        Logout
-                    </button>
-                </form>
+                    <x-dropdown-item href="/admin/posts" :active="request()->routeIs('admin.post.home')">All Posts</x-dropdown-item>
+                    <x-dropdown-item href="/admin/posts/create" :active="request()->routeIs('admin.post.create')">New Posts</x-dropdown-item>
+                    <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
+
+                    <form id="logout-form" action="/logout" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                </x-dropdown>
             @endauth
 
             <a href="#newsletter" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
@@ -69,11 +82,7 @@
                             <input id="email" name="email" type="text" placeholder="Your email address"
                                    class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
 
-                            @if( $errors->any() )
-                                @foreach($errors->all() as $error)
-                                    <span class="text-red-600 text-xs list-disc"> {{ $error }}</span>
-                                @endforeach
-                            @endif
+                            <x-form.error/>
                         </div>
                     </div>
 

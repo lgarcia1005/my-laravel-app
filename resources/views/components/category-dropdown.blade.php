@@ -1,4 +1,3 @@
-
 <x-dropdown>
     <x-slot name="trigger">
         <!-- Button -->
@@ -16,7 +15,8 @@
 
     <x-dropdown-item
         href="/?{{ http_build_query(request()->except('category','page')) }}"
-        :active="!$currentCategory">All</x-dropdown-item>
+        :active="!$currentCategory">All
+    </x-dropdown-item>
     @foreach($categories as $category)
         <x-dropdown-item
             href="/?category={{ $category->slug }}&{{ http_build_query(request()->except('category','page')) }}"

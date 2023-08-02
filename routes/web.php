@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
@@ -22,8 +23,16 @@ use Illuminate\Support\Facades\Route;
 Route::controller(PostController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('posts/{post:slug}', 'show')->name('show');
-    Route::get('/admin/posts/create', 'create')->middleware(['admin']);
-    Route::post('/admin/posts', 'store')->middleware(['admin']);
+
+});
+
+Route::name('admin.')->prefix('admin')->middleware('admin')->controller(AdminPostController::class)->group(function () {
+    Route::get('posts', 'index')->name('post.home');
+    Route::get('posts/create', 'create')->name('post.create');
+    Route::get('posts/{post}/edit', 'edit');
+    Route::patch('posts/{post}', 'update');
+    Route::delete('posts/{post}', 'destroy');
+    Route::post('posts', 'store');
 });
 
 Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
@@ -44,6 +53,8 @@ Route::controller(SessionsController::class)->group(function () {
 });
 
 Route::post('newsletter', NewsletterController::class);
+
+Route::resource('photos', App\Http\Controllers\Test\PhotoController::class)->withTrashed();
 
 Route::get('/csrf-token', function () {
     return response()->json(['token' => csrf_token()]);
